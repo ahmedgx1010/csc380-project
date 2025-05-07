@@ -1,31 +1,26 @@
 import gi
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
+from gi.repository import Gtk as gtk
+from gi.repository import GLib as glib
 
-class MainWindow:
+class Main:
     def __init__(self):
         # Load the Glade file
-        builder = Gtk.Builder()
-        builder.add_from_file("interface.glade")
+        gladeFile = "main.glade"
+        self.builder = gtk.Builder()
+        self.builder.add_from_file(gladeFile)
 
         # Get the main window from the Glade file
-        self.window = builder.get_object("main_window")
-        if not self.window:
-            raise Exception("Could not find 'main_window' in interface.glade")
-        self.window.set_default_size(800, 600)
+        window = self.builder.get_object("main_window")
+        window.connect("delete-event", gtk.main_quit)
 
         # Connect signals
-        builder.connect_signals(self)
+        self.builder.connect_signals(self)
 
         # Show the window
-        self.window.show_all()
+        window.show_all()
 
-    def on_destroy(self, *args):
-        Gtk.main_quit()
-
-def main():
-    app = MainWindow()
-    Gtk.main()
 
 if __name__ == "__main__":
-    main()
+    main = Main()
+    gtk.main()
