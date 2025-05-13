@@ -1,6 +1,6 @@
 import gi
-import mysql.connector
-from mysql.connector import Error
+#import mysql.connector
+#from mysql.connector import Error
 from datetime import datetime
 
 gi.require_version('Gtk', '3.0')
